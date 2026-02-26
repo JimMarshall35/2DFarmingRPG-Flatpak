@@ -1,0 +1,23 @@
+id: org.flatpak.Hello
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+command: WarFarmer
+modules:
+  - "shared-modules/lua5.4/lua-5.4.json"
+  - name: glfw3
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/glfw/glfw.git
+        tag: 3.4
+  - name: WarFarmer
+    buildsystem: simple
+    build-commands:
+      - mkdir src/game/Stardew/build
+      - cd src/game/Stardew/build && cmake ..
+    sources:
+      - type: git
+        url: https://github.com/JimMarshall35/2DFarmingRPG.git
+        branch: master
+        dest: 'src/game'
