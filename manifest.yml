@@ -1,8 +1,14 @@
-id: org.flatpak.Hello
+id: org.JimMarshall.WarFarmerGame
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
-command: WarFarmer
+command: WarFarmerGame
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --device=dri
+  - --socket=pulseaudio
 modules:
   - "shared-modules/lua5.4/lua-5.4.json"
   - name: glfw3
@@ -11,11 +17,22 @@ modules:
       - type: git
         url: https://github.com/glfw/glfw.git
         tag: 3.4
-  - name: WarFarmer
+  - name: WarFarmerGame
     buildsystem: simple
     build-commands:
       - mkdir src/game/Stardew/build
-      - cd src/game/Stardew/build && cmake ..
+      - mkdir -p "/app/share/WfAssets"
+      - cd src/game/Stardew/build && cmake -DNoGTest=ON .. && make
+      - cd src/game/Stardew && ./compile_assets.sh
+      - cd src/game/Stardew/WfAssets && find . -name '*.txt' -o -name '*.tilemap' -o -name '*.atlas' -o -name '*.xml' -o -name '*.lua' -o -name '*.game' -o -name '*.txt' | cpio -pdm "/app/share/WfAssets"
+      - cp src/game/Stardew/WfAssets/ImageFiles.json "/app/share/WfAssets/ImageFiles.json"
+      - cp src/game/Stardew/WfAssets/Keymap.json "/app/share/WfAssets/Keymap.json"
+      - cp "src/game/Stardew/build/game/WarFarmer" "/app/bin/WarFarmer"
+      - cp "src/game/Stardew/build/engine/src/libStardewEngine.so" "/app/lib/libStardewEngine.so"
+      - rm -rf src/game
+      - echo "cd /app/share && WarFarmer \$@" >> /app/bin/WarFarmerGame
+      - chmod +x /app/bin/WarFarmerGame
+
     sources:
       - type: git
         url: https://github.com/JimMarshall35/2DFarmingRPG.git
