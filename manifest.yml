@@ -22,6 +22,7 @@ modules:
     build-commands:
       - mkdir src/game/Stardew/build
       - mkdir -p "/app/share/WfAssets"
+      - cd src/game/Stardew/game && python3 make_release_version_header.py 
       - cd src/game/Stardew/build && cmake -DNoGTest=ON .. && make
       - cd src/game/Stardew && ./compile_assets.sh
       - cd src/game/Stardew/WfAssets && find . -name '*.txt' -o -name '*.tilemap' -o -name '*.atlas' -o -name '*.xml' -o -name '*.lua' -o -name '*.game' -o -name '*.txt' | cpio -pdm "/app/share/WfAssets"
