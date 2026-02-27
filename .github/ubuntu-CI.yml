@@ -1,0 +1,28 @@
+name: Ubuntu CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - name: Get Dependencies
+      run: |
+        sudo apt install flatpak-builder
+    - name: Build
+      run: |
+        ./build.sh
+    - uses: actions/upload-artifact@v4
+      with:
+        name: my-artifact
+        path: ./*.flatpak
