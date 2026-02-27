@@ -36,7 +36,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.version.outputs.version }}
-        name: Nightly Build ${{ steps.version.outputs.version }}
+        name: Weekly Build ${{ steps.version.outputs.version }}
         prerelease: true
         files: ./Farming.flatpak
       env:
