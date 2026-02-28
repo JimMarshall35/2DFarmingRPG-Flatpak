@@ -1,0 +1,12 @@
+#!/bin/bash
+# Wrapper script to start the game from inside the flatpak sandbox
+
+# copy development save to save folder if not already present - ultimately the game itself will do this but for now, this script does it
+DATA_HOME="${XDG_DATA_HOME:-$HOME/data}" 
+CONFIG_HOME="${XDG_DATA_HOME:-$HOME/config}" 
+echo "config home: $CONFIG_HOME data home: $DATA_HOME"
+cp -a -n /app/share/WfAssets/Saves/. $DATA_HOME 
+cp -n /app/share/WfAssets/Keymap.json $CONFIG_HOME 
+
+# start game specifying assets, config and save directories as absolute paths
+WarFarmer \$@ --assetsDir /app/share/WfAssets --configDir $CONFIG_HOME --savesDir $DATA_HOME

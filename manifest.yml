@@ -31,7 +31,7 @@ modules:
       - cp "src/game/Stardew/build/game/WarFarmer" "/app/bin/WarFarmer"
       - cp "src/game/Stardew/build/engine/src/libStardewEngine.so" "/app/lib/libStardewEngine.so"
       - rm -rf src/game
-      - echo "cd /app/share && WarFarmer \$@" >> /app/bin/WarFarmerGame
+      - cp -f WarFarmerGame /app/bin/WarFarmerGame
       - chmod +x /app/bin/WarFarmerGame
 
     sources:
@@ -39,3 +39,5 @@ modules:
         url: https://github.com/JimMarshall35/2DFarmingRPG.git
         branch: master
         dest: 'src/game'
+      - type: file
+        path: WarFarmerGame
