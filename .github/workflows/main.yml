@@ -33,7 +33,7 @@ jobs:
         path: ./*.flatpak
 
     - name: Create version string
-      if: github.event_name == 'schedule' ||  ${{ github.event.inputs.triggerRelease }
+      if: github.event_name == 'schedule' ||  ${{ github.event.inputs.triggerRelease }}
       id: version
       run: echo "version=weekly-$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
 
