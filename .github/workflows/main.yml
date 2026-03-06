@@ -7,6 +7,12 @@ on:
     branches: [ "main" ]
   schedule:
     - cron: "40 23 * * 5"
+  workflow_dispatch:
+    inputs:
+      triggerRelease:
+        description: 'Trigger release'
+        required: true
+        default: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,7 +33,7 @@ jobs:
         path: ./*.flatpak
 
     - name: Create version string
-      if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+      if: github.event_name == 'schedule' ||  ${{ github.event.inputs.triggerRelease }
       id: version
       run: echo "version=weekly-$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
 
