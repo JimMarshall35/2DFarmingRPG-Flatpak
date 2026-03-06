@@ -12,6 +12,7 @@ on:
       triggerRelease:
         description: 'Trigger release'
         required: true
+        type: boolean
         default: false
 jobs:
   build:
@@ -33,12 +34,12 @@ jobs:
         path: ./*.flatpak
 
     - name: Create version string
-      if: github.event_name == 'schedule' ||  ${{ github.event.inputs.triggerRelease }} == true
+      if: github.event_name == 'schedule' ||  ${{ github.event.inputs.triggerRelease == true }}
       id: version
       run: echo "version=weekly-$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
 
     - name: Create GitHub Release
-      if: github.event_name == 'schedule' || ${{ github.event.inputs.triggerRelease }} == true
+      if: github.event_name == 'schedule' || ${{ github.event.inputs.triggerRelease == true }}
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.version.outputs.version }}
