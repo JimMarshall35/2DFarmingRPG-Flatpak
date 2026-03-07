@@ -16,7 +16,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/glfw/glfw.git
-        tag: 3.4
+        tag: "3.4"
   - name: WarFarmerGame
     buildsystem: simple
     build-commands:

@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: "40 23 * * 5"
+    - cron: "10 00 * * 5"
   workflow_dispatch:
     inputs:
       triggerRelease:
