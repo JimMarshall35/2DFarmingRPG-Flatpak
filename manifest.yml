@@ -40,3 +40,5 @@ modules:
         path: WarFarmerGame
       - type: file
         path: org.JimMarshall.WarFarmerGame.png
+      - type: file
+        path: org.JimMarshall.WarFarmerGame.desktop
