@@ -10,27 +10,22 @@ finish-args:
   - --device=dri
   - --socket=pulseaudio
 modules:
-  - "shared-modules/lua5.4/lua-5.4.json"
+  - "shared-modules/lua5.3/lua-5.3.5.json"
   - name: glfw3
     buildsystem: cmake
     sources:
       - type: git
         url: https://github.com/glfw/glfw.git
         tag: "3.4"
+  - "python3-jinja2.json"
   - name: WarFarmerGame
     buildsystem: simple
     build-commands:
-      - mkdir src/game/Stardew/build
-      - mkdir -p "/app/share/WfAssets"
+      - mkdir -p src/game/Stardew/build
       - cd src/game/Stardew/game && python3 make_release_version_header.py 
       - cd src/game/Stardew/build && cmake -DNoGTest=ON .. && make
       - cd src/game/Stardew && ./compile_assets.sh
-      - cd src/game/Stardew/WfAssets && find . -name '*.txt' -o -name '*.tilemap' -o -name '*.atlas' -o -name '*.xml' -o -name '*.lua' -o -name '*.game' -o -name '*.txt' | cpio -pdm "/app/share/WfAssets"
-      - cp src/game/Stardew/WfAssets/ImageFiles.json "/app/share/WfAssets/ImageFiles.json"
-      - cp src/game/Stardew/WfAssets/Keymap.json "/app/share/WfAssets/Keymap.json"
-      - cp "src/game/Stardew/build/game/WarFarmer" "/app/bin/WarFarmer"
-      - cp "src/game/Stardew/build/engine/src/libStardewEngine.so" "/app/lib/libStardewEngine.so"
-      - rm -rf src/game
+      - cmake --install src/game/Stardew/build --prefix /app
       - cp -f WarFarmerGame /app/bin/WarFarmerGame
       - chmod +x /app/bin/WarFarmerGame
 
