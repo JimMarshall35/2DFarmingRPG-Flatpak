@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=WarFarmer
+Comment=2D Farming RPG
+Exec=WarFarmerGame
+Icon=org.JimMarshall.WarFarmerGame
+Categories=Game;
+StartupWMClass=WarFarmerGame

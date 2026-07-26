@@ -28,6 +28,8 @@ modules:
       - cmake --install src/game/Stardew/build --prefix /app
       - cp -f WarFarmerGame /app/bin/WarFarmerGame
       - chmod +x /app/bin/WarFarmerGame
+      - install -Dm644 org.JimMarshall.WarFarmerGame.desktop /app/share/applications/org.JimMarshall.WarFarmerGame.desktop
+      - install -Dm644 org.JimMarshall.WarFarmerGame.png /app/share/icons/hicolor/32x32/apps/org.JimMarshall.WarFarmerGame.png
 
     sources:
       - type: git
@@ -36,3 +38,5 @@ modules:
         dest: 'src/game'
       - type: file
         path: WarFarmerGame
+      - type: file
+        path: org.JimMarshall.WarFarmerGame.png
