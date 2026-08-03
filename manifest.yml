@@ -11,13 +11,13 @@ finish-args:
   - --socket=pulseaudio
 modules:
   - "shared-modules/lua5.3/lua-5.3.5.json"
+  - "python3-jinja2.json"
   - name: glfw3
     buildsystem: cmake
     sources:
       - type: git
         url: https://github.com/glfw/glfw.git
         tag: "3.4"
-  - "python3-jinja2.json"
   - name: WarFarmerGame
     buildsystem: simple
     build-commands:
