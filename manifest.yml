@@ -9,9 +9,19 @@ finish-args:
   - --share=ipc
   - --device=dri
   - --socket=pulseaudio
+cleanup:
+  - /bin/nu
 modules:
   - "shared-modules/lua5.3/lua-5.3.5.json"
   - "python3-jinja2.json"
+  - name: nushell
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 nu /app/bin/nu
+    sources:
+      - type: archive
+        url: https://github.com/nushell/nushell/releases/download/0.114.1/nu-0.114.1-x86_64-unknown-linux-gnu.tar.gz
+        sha256: 8802b26edcdf1a64477567b5ce909fbae3d72d731c8f0847892ea16c6fa73c53
   - name: glfw3
     buildsystem: cmake
     sources:
@@ -22,15 +32,14 @@ modules:
     buildsystem: simple
     build-commands:
       - mkdir -p src/game/Stardew/build
-      - cd src/game/Stardew/game && python3 make_release_version_header.py 
+      - cd src/game/Stardew/game && python3 make_release_version_header.py
       - cd src/game/Stardew/build && cmake -DNoGTest=ON .. && make
-      - cd src/game/Stardew && ./compile_assets.sh
+      - cd src/game/Stardew && nu ./Makefile.nu compile_assets_linux
       - cmake --install src/game/Stardew/build --prefix /app
       - cp -f WarFarmerGame /app/bin/WarFarmerGame
       - chmod +x /app/bin/WarFarmerGame
       - install -Dm644 org.JimMarshall.WarFarmerGame.desktop /app/share/applications/org.JimMarshall.WarFarmerGame.desktop
       - install -Dm644 org.JimMarshall.WarFarmerGame.png /app/share/icons/hicolor/32x32/apps/org.JimMarshall.WarFarmerGame.png
-
     sources:
       - type: git
         url: https://github.com/JimMarshall35/2DFarmingRPG.git
